@@ -1,51 +1,35 @@
+# createGetter
+
+Необходимо реализовать функцию "createGetter". Функция должна принимать строку вида 
+"prop-1.prop-2.prop-n", где "prop-1, ..., prop-n" - это свойства объекта разделенные точкой.
+
+К примеру строка вида "props.images.src" - это путь к свойству "src" следующего объекта:
+
 ```javascript
-/**
- * createGetter - creates function getter which allows select value from object
- * @param {string} path - the strings path separated by dot
- * @returns {function} - function-getter which allow get value from object by set path
- */
-const createGetter = path => {
-  const pathArray = path.split('.');
-
-  return obj => {
-    let result = obj;
-
-    for (const item of pathArray) {
-      if (result === undefined) {
-        break;
-      }
-
-      result = result[item];
+const obj = { 
+  props: { 
+    images: {
+      src: "http://path-to-some-img"
     }
-
-    return result;
-  };
+  }
 };
 ```
 
+Функция "createGetter" должна возвращать новую функцию, которая по заданному пути 
+найдет значение в переданном ей объекте и вернет это значение. 
+
 ```javascript
-/**
- * createGetter - creates function getter which allows select value from object
- * @param {string} path - the strings path separated by dot
- * @returns {function} - function-getter which allow get value from object by set path
- */
-const createGetter = path => {
-  const pathArray = path.split('.');
+function createGetter(field) {
+  /* ... */
+}
 
-  return obj => {
-    let result = obj;
+const product = {
+  category: {
+    title: "Goods"
+  }
+}
 
-    const getValue = index => {
-      if (index === pathArray.length || result === undefined) {
-        return result;
-      }
+const getter = createGetter('category.title');
 
-      result = result[pathArray[index]];
-
-      return getValue(index + 1);
-    };
-
-    return getValue(0);
-  };
-};
+console.log(getter(product)); // Goods
 ```

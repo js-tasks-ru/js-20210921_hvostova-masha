@@ -15,8 +15,8 @@ export default class ColumnChart {
     this.generalChartInfo = {...this.generalChartInfo, ...creationObj};
 
     const columnsTemplate = this.getColumnsTemplate();
-    const template = `<div class="dashboard__chart">
-            <div class="column-chart ${this.generalChartInfo?.data ? '' : 'column-chart_loading'}" style="--chart-height: ${this.generalChartInfo.chartHeight}">
+    const template = `
+            <div class="column-chart ${!this.generalChartInfo?.data ? 'column-chart_loading' : ''}" style="--chart-height: ${this.generalChartInfo.chartHeight}">
               <div class="column-chart__title">
                 ${this.generalChartInfo?.label}
                 <a class="column-chart__link" href="${this.generalChartInfo?.link}">View all</a>
@@ -27,14 +27,12 @@ export default class ColumnChart {
                 </div>
                 ${columnsTemplate}
               </div>
-          </div>
-        </div>`;
+            </div>
+    `;
 
-    this.element = document.createElement('div');
-    this.element.innerHTML = template;
-    if (!this.generalChartInfo?.data) {
-      this.element.classList.add("column-chart_loading");
-    }
+    const elementNode = document.createElement('div');
+    elementNode.innerHTML = template;
+    this.element = elementNode.firstElementChild;
   }
 
   update(newData) {

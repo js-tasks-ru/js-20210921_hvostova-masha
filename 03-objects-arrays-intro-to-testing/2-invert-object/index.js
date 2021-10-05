@@ -1,6 +1,7 @@
 /**
  * invertObj - should swap object keys and values
  * @param {object} obj - the initial object
+ * */
 
 export function invertObj(obj) {
   if (!obj) {

@@ -3,20 +3,15 @@
  * @param {string} path - the strings path separated by dot
  * @returns {function} - function-getter which allow get value from object by set path
  */
-export const createGetter = path => {
-  const pathArray = path.split('.');
-
-  return obj => {
-    let result = obj;
-
-    for (const item of pathArray) {
-      if (result === undefined) {
-        break;
-      }
-
-      result = result[item];
+export function createGetter(path) {
+  const fieldsPath = path.split(".");
+  const targetField = fieldsPath[fieldsPath.length - 1];
+  let currentFieldIndex = 0;
+  return function getter(obj) {
+    if (!obj) {
+      return obj;
     }
-
-    return result;
+    const map = new Map(Object.entries(obj));
+    return map.has(targetField) ? map.get(targetField) : getter(map.get(fieldsPath[currentFieldIndex++]));
   };
-};
+}

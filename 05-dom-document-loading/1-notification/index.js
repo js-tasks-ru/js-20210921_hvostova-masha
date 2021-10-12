@@ -50,12 +50,10 @@ export default class NotificationMessage {
 
   remove() {
     this.element.remove();
-    NotificationMessage.activeNotificationElement.remove();
-    NotificationMessage.activeNotificationElement = null;
   }
 
   destroy() {
-    this.element.remove();
+    this.remove();
     NotificationMessage.activeNotificationElement = null;
     NotificationMessage.timer = null;
   }
